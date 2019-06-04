@@ -31,8 +31,7 @@ def main(argv):
                               minRadius=5, maxRadius=60)
 
     # create empty list and start variables
-    my_list = []
-    my_colors =[]
+    my_variable_array =[]
     start = "red"
     zr = 0
     zg = 0
@@ -50,30 +49,39 @@ def main(argv):
 
             # printing and counting red
             if 61 > color[0] > 39 and 61 > color[1] > 39 and 251 > color[2] > 239:
-                my_colors.append("rot")
+                farbe = "rot"
                 zr = zr+1
             else:
                 # printing and counting yellow
                 if 99 > color[0] > 85 and 230 > color[1] > 220 and 245 > color[2] > 235:
-                    my_colors.append("gelb")
+                    farbe = "gelb"
                     zg = zg + 1
                 else:
-                    my_colors.append("blau")
+                    farbe = "blau"
+
+            myvariable = (center[0], center[1], farbe)
+            my_variable_array.append(myvariable)
 
             # draw circle center and add to array
             cv.circle(img, center, 1, (255, 0, 255), 2)
-            my_list.append(center)
 
             # draw circle outline
             radius = i[2]
             cv.circle(img, center, radius, (255, 0, 255), 3)
 
+        # sort array
+        my_variable_array.sort(reverse=False)
+        test = (split(my_variable_array, 6))
+        print(test)
+
         # print results
-        print("Farben:", my_colors)
-        print("Anzahl an Kreisen:", z)
-        print("Koordinaten der Kreismittelpunkte:", my_list)
+        #print(my_variable_array)
         print("Anzahl rote Steine:", zr)
         print("Anzahl gelbe Steine:", zg)
+
+
+
+
 
         # who is next if red started
         if start == "red":
@@ -90,10 +98,20 @@ def main(argv):
                 print("Rot ist dran!")
 
     # show image and detected circles
-    cv.imshow("Erkannte Kreise", img)
+    cv.imshow("Vier Gewinnt", img)
     cv.waitKey(0)
 
     return 0
+
+
+def split(arr, size):
+    arrs = []
+    while len(arr) > size:
+        pice = arr[:size]
+        arrs.append(pice)
+        arr = arr[size:]
+    arrs.append(arr)
+    return arrs
 
 
 # wtf?!
