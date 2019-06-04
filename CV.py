@@ -32,10 +32,10 @@ def main(argv):
 
     # create empty list and start variables
     my_list = []
+    my_colors =[]
+    start = "red"
     zr = 0
     zg = 0
-    start = "red"
-    print("Farben:")
 
     # draw circles and center
     if circles is not None:
@@ -45,49 +45,44 @@ def main(argv):
             z=z+1
             center = (i[0], i[1])
 
-            # detect color of center and print them
+            # detect color of center and add them to array
             color = img[(center[1], center[0])]
-            # hex = (color[0] << 16) + (color[1] << 8) + (color[2])
-            #print(color)
 
             # printing and counting red
             if 61 > color[0] > 39 and 61 > color[1] > 39 and 251 > color[2] > 239:
-                print("rot")
+                my_colors.append("rot")
                 zr = zr+1
             else:
-
                 # printing and counting yellow
                 if 99 > color[0] > 85 and 230 > color[1] > 220 and 245 > color[2] > 235:
-                    print("gelb")
+                    my_colors.append("gelb")
                     zg = zg + 1
                 else:
-                    print ("blau")
+                    my_colors.append("blau")
 
-
-            # draw circle center
+            # draw circle center and add to array
             cv.circle(img, center, 1, (255, 0, 255), 2)
+            my_list.append(center)
 
             # draw circle outline
             radius = i[2]
             cv.circle(img, center, radius, (255, 0, 255), 3)
-            my_list.append(center)
 
-        print("Anzahl an Kreisen:")
-        print(z)
-        print("Koordinaten der Kreismittelpunkte:")
-        print(my_list)
-        print("Anzahl rote Steine:")
-        print(zr)
-        print("Anzahl gelbe Steine:")
-        print(zg)
+        # print results
+        print("Farben:", my_colors)
+        print("Anzahl an Kreisen:", z)
+        print("Koordinaten der Kreismittelpunkte:", my_list)
+        print("Anzahl rote Steine:", zr)
+        print("Anzahl gelbe Steine:", zg)
 
-        # who is next
+        # who is next if red started
         if start == "red":
             if zr>=zg:
                 print("Rot ist dran!")
             else:
                 print("Gelb ist dran!")
 
+        # who is next if yellow started
         if start == "yellow":
             if zg >= zr:
                 print("Gelb ist dran!")
@@ -104,10 +99,3 @@ def main(argv):
 # wtf?!
 if __name__ == "__main__":
     main(sys.argv[1:])
-
-
-#load image
-#img = cv2.imread('Testbild.jpg', 1)
-#cv2.imshow('Image', img)
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
