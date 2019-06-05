@@ -2,7 +2,6 @@ import cv2 as cv
 import sys
 import numpy as np
 
-
 # connection to webcam
 # cam= cv2.VideoCapture(0)
 # while(True):
@@ -16,7 +15,7 @@ import numpy as np
 
 
 def main(argv):
-    default_file = 'images.jpg'
+    default_file = 'image.jpg'
     filename = argv[0] if len(argv) > 0 else default_file
 
     # load image and convert to gray
@@ -203,17 +202,17 @@ def main(argv):
 
         # who is next if red started
         if start == "red":
-            if zr>=zg:
-                print("Rot ist dran!")
-            else:
+            if zr > zg:
                 print("Gelb ist dran!")
+            else:
+                print("Rot ist dran!")
 
         # who is next if yellow started
         if start == "yellow":
-            if zg >= zr:
-                print("Gelb ist dran!")
-            else:
+            if zg > zr:
                 print("Rot ist dran!")
+            else:
+                print("Gelb ist dran!")
 
     # show image and detected circles
     cv.imshow("Vier Gewinnt", img)
