@@ -63,11 +63,11 @@ def main(argv):
             my_variable_array.append(myvariable)
 
             # draw circle center
-            cv.circle(img, center, 1, (255, 0, 255), 2)
+            #cv.circle(img, center, 1, (255, 0, 255), 2)
 
             # draw circle outline
-            radius = i[2]
-            cv.circle(img, center, radius, (255, 0, 255), 3)
+            #radius = i[2]
+            #cv.circle(img, center, radius, (255, 0, 255), 3)
 
         # sort array
         my_variable_array.sort(reverse=False)
