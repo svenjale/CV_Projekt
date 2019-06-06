@@ -1,5 +1,5 @@
 import cv2 as cv
-import sys
+import ctypes
 import numpy as np
 
 # connection to webcam
@@ -40,6 +40,7 @@ def main():
         for i in circles[0, :]:
             z=z+1
             center = (i[0], i[1])
+            radius = i[2]
 
             # detect color of center and add them to array
             color = img[(center[1], center[0])]
@@ -60,157 +61,116 @@ def main():
             my_variable_array.append(myvariable)
 
             # draw circle center in pink
-            #cv.circle(img, center, 1, (255, 0, 255), 2)
+            # cv.circle(img, center, 1, (255, 0, 255), 2)
 
             # draw circle outline in pink
-            #radius = i[2]
-            #cv.circle(img, center, radius, (255, 0, 255), 3)
+            radius = i[2]
+            # cv.circle(img, center, radius, (255, 0, 255), 3)
 
         # sort array
         my_variable_array.sort(reverse=False)
         test = (split(my_variable_array, 6))
 
         # sort columns, one arrays for single column
+        # colum1
         test[0].sort(key=lambda x: x[1])
         spalte1 = test[0]
+        # column2
         test[1].sort(key=lambda x: x[1])
         spalte2 = test[1]
+        # column3
         test[2].sort(key=lambda x: x[1])
         spalte3 = test[2]
+        # column4
         test[3].sort(key=lambda x: x[1])
         spalte4 = test[3]
+        # column5
         test[4].sort(key=lambda x: x[1])
         spalte5 = test[4]
+        # column 6
         test[5].sort(key=lambda x: x[1])
         spalte6 = test[5]
+        # column 7
         test[6].sort(key=lambda x: x[1])
         spalte7 = test[6]
+
 
         #where is a free spot
         #column 1
         print("Spalte 1:", spalte1)
-        for myvariable in spalte1:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 1:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
-
+        lastfree("1", spalte1, img, radius)
         # column 2
         print("Spalte 2:", spalte2)
-        for myvariable in spalte2:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 2:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
-
+        lastfree("2", spalte2, img, radius)
         # column 3
         print("Spalte 3:", spalte3)
-        for myvariable in spalte3:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 3:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
-
+        lastfree("3", spalte3, img, radius)
         # column 4
         print("Spalte 4:", spalte4)
-        for myvariable in spalte4:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 4:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
-
+        lastfree("4", spalte4, img, radius)
         # column 5
         print("Spalte 5:", spalte5)
-        for myvariable in spalte5:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 5:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
-
+        lastfree("5", spalte5, img, radius)
         # column 6
         print("Spalte 6:", spalte6)
-        for myvariable in spalte6:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 6:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
-
+        lastfree("6", spalte6, img, radius)
         # column 7
         print("Spalte 7:", spalte7)
-        for myvariable in spalte7:
-            if myvariable[2] == "Hintergrund":
-                last = myvariable
-            else:
-                print("Letzte freie Stelle in Spalte 7:", last)
-                # draw circle center
-                center = (last[0], last[1])
-                cv.circle(img, center, 1, (0, 0, 0), 2)
-                # draw circle outline
-                radius = i[2]
-                cv.circle(img, center, radius, (0, 0, 0), 3)
-                break
+        lastfree("7", spalte7, img, radius)
+
+        # is there a winner
+        winnery = False
+        # vertical
+        # column 1
+        if winnery == False:
+            winnery = vertwinner(spalte1, "1")
+        # column 2
+        if winnery == False:
+            winnery = vertwinner(spalte2, "2")
+        # column 3
+        if winnery == False:
+            winnery = vertwinner(spalte3, "3")
+        # column 4
+        if winnery == False:
+            winnery = vertwinner(spalte4, "4")
+        # column 5
+        if winnery == False:
+            winnery = vertwinner(spalte5, "5")
+        # column 6
+        if winnery == False:
+            winnery = vertwinner(spalte6, "6")
+        # column 7
+        if winnery == False:
+            winnery = vertwinner(spalte7, "7")
+
+        # horizontal
+        if winnery == False:
+            winnery = horwinner(test)
+
+        # diagonal
 
 
         # print results
-        #print(my_variable_array)
-        print("Anzahl rote Steine:", zr)
-        print("Anzahl gelbe Steine:", zg)
+        # print(my_variable_array)
+        # print("Anzahl rote Steine:", zr)
+        # print("Anzahl gelbe Steine:", zg)
+        print("1",winnery)
+        # winner?
+        if winnery == False:
+            # who is next if red started
+            if start == "red":
+                if zr > zg:
+                    print("Gelb ist dran!")
+                else:
+                    print("Rot ist dran!")
 
-        # who is next if red started
-        if start == "red":
-            if zr > zg:
-                print("Gelb ist dran!")
-            else:
-                print("Rot ist dran!")
+            # who is next if yellow started
+            if start == "yellow":
+                if zg > zr:
+                    print("Rot ist dran!")
+                else:
+                    print("Gelb ist dran!")
 
-        # who is next if yellow started
-        if start == "yellow":
-            if zg > zr:
-                print("Rot ist dran!")
-            else:
-                print("Gelb ist dran!")
 
     # show image and detected circles
     cv.imshow("Vier Gewinnt", img)
@@ -219,6 +179,84 @@ def main():
     return 0
 
 
+# last free function
+def lastfree(z, spalte, img, radius):
+    for myvariable in spalte:
+        if myvariable[2] == "Hintergrund":
+            last = myvariable
+        else:
+            print("Letzte freie Stelle in Spalte", z, ":", last)
+            # draw circle center
+            center = (last[0], last[1])
+            cv.circle(img, center, 1, (0, 0, 0), 2)
+            # draw circle outline
+            cv.circle(img, center, radius, (0, 0, 0), 3)
+            break
+    return
+
+
+# vertical winner function
+def vertwinner(spalte, z):
+    rot = 0
+    gelb = 0
+    winnery = False
+    for myvariable in spalte:
+        if myvariable[2] == "Rot":
+            rot = rot + 1
+            if rot == 4:
+                print("Rot hat in Spalte", z, "gewonnen!")
+                winnery = True
+                return winnery
+        else:
+            rot = 0
+
+    for myvariable in spalte:
+        if myvariable[2] == "Gelb":
+            gelb = gelb + 1
+            if gelb == 4:
+                print("Gelb hat in Spalte", z, "gewonnen!")
+                winnery = True
+                return winnery
+        else:
+            gelb = 0
+    return winnery
+
+
+# horizontal winner function
+def horwinner(test):
+    rot = 0
+    gelb = 0
+    winnery = False
+    for y in range(0, 6):
+        for x in range (0, 7):
+            spalte = test[x]
+            element = spalte[y]
+            if element[2] == "Rot":
+                rot = rot+1
+                if rot == 4:
+                    print("Rot hat in Zeile", x, "gewonnen")
+                    winnery = True
+                    return winnery
+            else:
+                rot = 0
+
+    for y in range(0, ):
+        for x in range (0, 7):
+            spalte = test[x]
+            element = spalte[y]
+            if element[2] == "Gelb":
+                gelb = gelb+1
+                if rot == 4:
+                    print("Gelb hat in Zeile", x, "gewonnen")
+                    winnery = True
+                    return winnery
+            else:
+                gelb = 0
+    else:
+        return winnery
+
+
+# split array function
 def split(arr, size):
     arrs = []
     while len(arr) > size:
@@ -229,6 +267,6 @@ def split(arr, size):
     return arrs
 
 
-# wtf?!
+# main function
 if __name__ == "__main__":
     main()
