@@ -14,12 +14,10 @@ import numpy as np
 # cv2.destroyAllWindows()
 
 
-def main(argv):
-    default_file = 'image.jpg'
-    filename = argv[0] if len(argv) > 0 else default_file
+def main():
 
     # load image and convert to gray
-    img = cv.imread('image.jpg', 1)
+    img = cv.imread('image2.jpg', 1)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     gray = cv.medianBlur(gray, 5)
 
@@ -47,12 +45,12 @@ def main(argv):
             color = img[(center[1], center[0])]
 
             # printing and counting red
-            if 61 > color[0] > 39 and 61 > color[1] > 39 and 251 > color[2] > 239:
+            if 80 > color[0] >= 0 and 80 > color[1] >= 0 and 255 >= color[2] > 130:
                 farbe = "Rot"
                 zr = zr+1
             else:
                 # printing and counting yellow
-                if 99 > color[0] > 85 and 230 > color[1] > 220 and 245 > color[2] > 235:
+                if 180 > color[0] >= 0 and 235 >= color[1] > 130 and 255 > color[2] > 125:
                     farbe = "Gelb"
                     zg = zg + 1
                 else:
@@ -61,10 +59,10 @@ def main(argv):
             myvariable = (center[0], center[1], farbe)
             my_variable_array.append(myvariable)
 
-            # draw circle center
+            # draw circle center in pink
             #cv.circle(img, center, 1, (255, 0, 255), 2)
 
-            # draw circle outline
+            # draw circle outline in pink
             #radius = i[2]
             #cv.circle(img, center, radius, (255, 0, 255), 3)
 
@@ -233,4 +231,4 @@ def split(arr, size):
 
 # wtf?!
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
